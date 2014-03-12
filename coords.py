@@ -1,3 +1,42 @@
 """Coordinates Module, made by Jacob Kodner."""
 
 __author__ = "Jacob Kodner"
+
+def generate(num, quad=1):
+    """Creates a Coordinate plane.
+
+    The plane that is generated has the x & y values less than the inputed 'num' paramater.
+    
+    You can also input which quadrant your points can come from. If you input 'all', the function
+    returns a list of all points from all quadrants. The quadrant parameter is labeled 'quad'."""
+    if not isinstance(num, int):
+        raise ValueError("Inputted 'num' Value is not an integer.")
+    elif quad not in [1, 2, 3, 4, "all"]:
+        raise ValueError("Inputed 'quad' value not 1-4/'all'")
+    def negate(q):
+        x_range, y_range = range(num), range(num)
+        neg = range(-num + 1, 1)
+        if q == 2:
+            x_range = neg
+        if q == 3:
+            x_range, y_range = neg, neg
+        if q == 4:
+            y_range = neg
+        return {"x_range": x_range, "y_range": y_range}
+    plane = []
+    if quad != "all":
+        x_range = negate(quad)["x_range"]
+        y_range = negate(quad)["y_range"]
+        for x in x_range:
+            for y in y_range:
+                plane.append((x, y))
+    else:
+        for i in range(1, 5):
+            x_range = negate(i)["x_range"]
+            y_range = negate(i)["y_range"]
+            for x in x_range:
+                for y in y_range:
+                    point = (x, y)
+                    if point not in plane:
+                        plane.append((point))
+    return plane

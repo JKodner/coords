@@ -9,8 +9,8 @@ def generate(num, quad=1):
     
     You can also input which quadrant your points can come from. If you input 'all', the function
     returns a list of all points from all quadrants. The quadrant parameter is labeled 'quad'."""
-    if not isinstance(num, int):
-        raise ValueError("Inputted 'num' Value is not an integer.")
+    if not isinstance(num, int) or num < 0:
+        raise ValueError("Inputted 'num' Value is not an integer or greater than 0.")
     elif quad not in [1, 2, 3, 4, "all"]:
         raise ValueError("Inputed 'quad' value not 1-4/'all'")
     def negate(q):
@@ -40,3 +40,21 @@ def generate(num, quad=1):
                     if point not in plane:
                         plane.append((point))
     return plane
+
+def slope(p1, p2):
+    if isinstance(p1, tuple) and isinstance(p2, tuple):
+        token = False
+        if len(p1) != 2 or len(p2) != 2:
+            token = True
+        for i in [p1, p2]:
+            for x in i:
+                if not isinstance(x, int):
+                    token = True
+        if token:
+            raise ValueError("Tuple Values are not capable for slope calculation.")
+    else:
+        raise ValueError("Values are not capable for slope calculation.")
+    from fractions import Fraction
+    xDif = p2[0] - p1[0]
+    yDif = p2[1] - p1[1]
+    return Fraction(yDif, xDif)

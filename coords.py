@@ -84,3 +84,29 @@ def slope(p1, p2, fract=True):
     else:
         obj = "%s/%s" % (yDif, xDif)
     return obj
+
+def on_slope(p, slope, intercept=0):
+    from re import match
+    if isinstance(p, tuple) and len(p) == 2:
+        token = False
+        for i in p:
+            if not isinstance(i, (int, float)):
+                token = True
+        if token:
+            raise ValueError("Tuple Values are not capable to work with.")
+    else:
+        raise ValueError("'p' Value is not capable to work with.")
+    if not isinstance(intercept, (int, float)):
+        raise ValueError("'intercept' value is not int or float.")
+    x, y = p[0], p[1]
+    patt = r'-?\d+(.\d+)? */ *-?\d+(.\d+)?'
+    if not match(patt, slope):
+        raise ValueError("Input is not Fraction")
+    else:
+        new_val = slope.split('/')
+        new_val = map(lambda x: x.strip(), new_val)
+        new_val = map(float, new_val)
+    slope = new_val[0] / new_val[1]
+    return bool(y == (slope * x) + intercept)
+
+

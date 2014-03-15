@@ -41,7 +41,16 @@ def generate(num, quad=1):
                         plane.append((point))
     return plane
 
-def slope(p1, p2):
+def slope(p1, p2, fract=True):
+    """Returns the Slope of points p1 and p2. p1 and p2 must be tuples with 2 integers.
+
+    There is an optional 'fract' parameter. If 'fract' equals True (default), the function
+    returns the slope as a Fraction object from the fractions module. If False, the function
+    returns a string.
+
+    If the slope is an undefined slope (#/0), the 'fract' value is overriden to False, and a
+    string is returned."""
+
     if isinstance(p1, tuple) and isinstance(p2, tuple):
         token = False
         if len(p1) != 2 or len(p2) != 2:
@@ -54,7 +63,15 @@ def slope(p1, p2):
             raise ValueError("Tuple Values are not capable for slope calculation.")
     else:
         raise ValueError("Values are not capable for slope calculation.")
+    if fract not in [True, False]:
+        raise ValueError("'fract' value is not True/False")
     from fractions import Fraction
     xDif = p2[0] - p1[0]
     yDif = p2[1] - p1[1]
-    return Fraction(yDif, xDif)
+    if xDif == 0:
+        fract = False
+    if fract:
+        obj = Fraction(yDif, xDif)
+    else:
+        obj = "%s/%s" % (yDif, xDif)
+    return obj

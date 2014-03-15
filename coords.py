@@ -49,7 +49,14 @@ def slope(p1, p2, fract=True):
     returns a string.
 
     If the slope is an undefined slope (#/0), the 'fract' value is overriden to False, and a
-    string is returned."""
+    string is returned.
+
+    Note: As though this program can calculate slopes in the form of decimals, the fractions
+    module will not be able to convert the slope into a Fraction. Therefore, the 'fract' parameter
+    would be overriden to False.
+
+    Note: Non-Fraction-Object slopes are not simplified, whereas Fraction-Object slopes are
+    simplified."""
 
     if isinstance(p1, tuple) and isinstance(p2, tuple):
         token = False
@@ -57,7 +64,7 @@ def slope(p1, p2, fract=True):
             token = True
         for i in [p1, p2]:
             for x in i:
-                if not isinstance(x, int):
+                if not isinstance(x, (int, float)):
                     token = True
         if token:
             raise ValueError("Tuple Values are not capable for slope calculation.")
@@ -69,6 +76,8 @@ def slope(p1, p2, fract=True):
     xDif = p2[0] - p1[0]
     yDif = p2[1] - p1[1]
     if xDif == 0:
+        fract = False
+    elif isinstance(xDif, float) or isinstance(yDif, float):
         fract = False
     if fract:
         obj = Fraction(yDif, xDif)

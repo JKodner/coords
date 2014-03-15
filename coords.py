@@ -86,6 +86,11 @@ def slope(p1, p2, fract=True):
     return obj
 
 def on_slope(p, slope, intercept=0):
+    """Determines if the given 'p' point is on a line with a slope of the 'slope' parameter.
+
+    Note: The slope parameter must be in string and fraction form.
+
+    There is also an optional 'intercept' parameter, which defaults to 0."""
     from re import match
     if isinstance(p, tuple) and len(p) == 2:
         token = False

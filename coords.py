@@ -150,7 +150,33 @@ def on_inequality(p, sign, slope, intercept=0):
     slope = new_val[0] / new_val[1]
     result = eval("y %s (slope * x) + intercept" % sign)
     return bool(result)
-    
 
+def distance(p1, p2):
+    """Calculates the distance between 'p1' and 'p2'.
 
-
+    'p1' and 'p2' can be either a tuple or integer, but both must be the same type."""
+    if isinstance(p1, tuple) and isinstance(p2, tuple):
+        token = False
+        reg = True
+        if len(p1) != 2 or len(p2) != 2:
+            token = True
+        for i in [p1, p2]:
+            for x in i:
+                if not isinstance(x, (int, float)):
+                    token = True
+        if token:
+            raise ValueError("Tuple Values are not capable for distance calculation.")
+    elif isinstance(p1, (int, float)) and isinstance(p2, (int, float)):
+        reg = False
+    else:
+        raise ValueError("Values are not capable for distance calculation.")
+    if reg:
+        from math import sqrt
+        x1, y1, x2, y2 = p1 + p2
+        add1 = (x2 - x1) ** 2
+        add2 = (y2 - y1) ** 2
+        dist = sqrt(add1 + add2)
+    else:
+        from math import fabs
+        dist = fabs(p1) + fabs(p2)
+    return dist

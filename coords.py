@@ -180,3 +180,31 @@ def distance(p1, p2):
         from math import fabs
         dist = fabs(p1) + fabs(p2)
     return dist
+
+def midpoint(p1, p2):
+    """Calculates the midpoint between 'p1' and 'p2'.
+
+    'p1' and 'p2' can be either a tuple or integer, but both must be the same type."""
+    if isinstance(p1, tuple) and isinstance(p2, tuple):
+        token = False
+        reg = True
+        if len(p1) != 2 or len(p2) != 2:
+            token = True
+        for i in [p1, p2]:
+            for x in i:
+                if not isinstance(x, (int, float)):
+                    token = True
+        if token:
+            raise ValueError("Tuple Values are not capable for distance calculation.")
+    elif isinstance(p1, (int, float)) and isinstance(p2, (int, float)):
+        reg = False
+    else:
+        raise ValueError("Values are not capable for distance calculation.")
+    if reg:
+        x1, y1, x2, y2 = p1 + p2
+        x = (x1 + x2) / 2.0
+        y = (y1 + y2) / 2.0
+        mid = (x, y)
+    else:
+        mid = (p1 + p2) / 2.0
+    return mid

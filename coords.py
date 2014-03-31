@@ -4,6 +4,51 @@
 
 __author__ = "Jacob Kodner"
 
+class point(object):
+    """Coordinate Point Object. The following parameters could be inputted:
+    x-coordinate, y-coordinate, z-coordinate, and data values."""
+    def __init__(self, x, y, z=0, *data):
+        """Initializes Point class."""
+        test = (int, float) 
+        if isinstance(x, test) and isinstance(y, test) and isinstance(z, test):
+            self.x = x
+            self.y = y
+            self.z = z
+            self.data = data
+        else:
+            raise ValueError("x/y/z values are not compatible.")
+    def __repr__(self):
+        """Sets representation of Point class."""
+        x, y, z = self.x, self.y, self.z
+        data = map(str, self.data)
+        rep = "(%s, %s, %s, " % (x, y, z)
+        rep += "[" + ", ".join(data) + "]" + ")"
+        return rep
+    def add(self, *info):
+        """Adds inputted information to the point's data values."""
+        data = list(self.data)
+        for i in info:
+            data.append(i)
+        self.data = tuple(data)
+    def delete(self, *info):
+        """Removes inputted info from the point's data values."""
+        data = list(self.data)
+        for i in info:
+            if i in data:
+                data.remove(i)
+        self.data = tuple(data)
+    def translate(self, x, y=0, z=0):
+        """Adds inputted x, y, z values to the point's coordinates.
+
+        Note: y/z default to 0."""
+        test = (int, float)
+        if isinstance(x, test) and isinstance(y, test) and isinstance(z, test):
+            self.x += x
+            self.y += y
+            self.z += z
+        else:
+            raise ValueError("x/y/z values are not compatible.")
+
 def generate(num, quad=1):
     """Creates a Coordinate plane.
 

@@ -245,3 +245,16 @@ def midpoint(p1, p2):
     else:
         mid = (p1 + p2) / 2.0
     return mid
+
+def vertex(a, b, c):
+    """Returns a vertex point of the given parabola equation.
+
+    Note: the 'x' value of the returned point is the line of symmetry."""
+    for i in [a, b, c]:
+        if not isinstance(i, (int, float)):
+            raise ValueError("Inputted value(s) are not integers.")
+    line = float(b) / (2 * a)
+    line = -line
+    a *= line ** 2
+    b *= line
+    return (line, a + b + c)
